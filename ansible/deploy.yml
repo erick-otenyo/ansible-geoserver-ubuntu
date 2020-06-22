@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  vars:
+    geoserver_version: "2.17.1"
+    geoserver_enable_cors: yes
+  roles:
+    - role: basics
+    - role: tomcat
+    - role: geoserver

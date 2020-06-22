@@ -1,0 +1,20 @@
+  - name: Download  Geoserver & unzip to tomcats/webapps
+    unarchive:
+      src: https://downloads.sourceforge.net/project/geoserver/GeoServer/{{ geoserver_version }}/geoserver-{{ geoserver_version }}-war.zip
+      dest: /opt/tomcat/webapps/
+      remote_src: yes
+    notify:
+      - restart tomcat
+
+  - name: Enable CORS by copying web.xml file with cors filters uncommented
+    copy:
+       src: web.xml
+       dest: /opt/tomcat/webapps/geoserver/WEB-INF/web.xml
+       mode: 0755
+       backup: yes
+    when: geoserver_enable_cors | default(False)
+    notify:
+      - restart tomcat
+
+
+
